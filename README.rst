@@ -9,7 +9,6 @@ Features of this Template
 * Machine Setup
 * Virtual Environment Setup (Poetry)
 * PyPi Publishing
-* Sphinx Documentation
 
 ========================
 How to Use This Template
