@@ -19,7 +19,6 @@ packages = [{include="mojo", from="source/packages"}]
 python = ">=3.10,<4.0"
 
 [tool.poetry.group.dev.dependencies]
-myst-parser = "^0.18.1"
 
 [tool.poetry.group.dbio.dependencies]
 
