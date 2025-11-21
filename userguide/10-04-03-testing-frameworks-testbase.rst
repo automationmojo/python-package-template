@@ -17,7 +17,7 @@ Purpose and Audience
 Test Roots and Resource Layout
 ------------------------------
 
-- Test suites live under ``<repository>/source/testroots/testbase`` or, for legacy organizations, ``<repository>/source/testroots/<org namespace root>``.
+- Test suites live under ``<repository>/source/testroots/testbase`` or, for organizations with namespace customized code, ``<repository>/source/testroots/<org namespace root>``.
 - Every ``testbase`` test root requires a ``__testroot__.py`` file that declares the root type as ``testbase`` so discovery utilities can register it correctly.
 - Organize tests by resource configuration (for example ``source/testroots/automojo/tests/singlehost`` for single-machine coverage and ``source/testroots/automojo/tests/simplecluster`` for clustered tests).
 - Keep directories parallel to the source hierarchy whenever possible so it remains obvious which packages each subtree validates.
