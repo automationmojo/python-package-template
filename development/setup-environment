@@ -15,6 +15,45 @@ PYTHON_CMD = "python3"
 if platform.system() == "Windows":
     PYTHON_CMD = "python"
 
+# This powershell function is used on Windows to customize the virtual environment so that it will
+# always load the .env file from the repository folder, when the virtual environment is started up.
+
+POWERSHELL_VARIABLE_FILE_LOAD_FUNCTION = '''
+function Load-Variable-File {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$VariableFile
+    )
+
+    if (-not (Test-Path -Path $VariableFile)) {
+        throw "Variable file '$VariableFile' not found."
+    }
+
+    Get-Content -Path $VariableFile | ForEach-Object {
+        $line = $_.Trim()
+
+        if ([string]::IsNullOrWhiteSpace($line)) { return }
+        if ($line.StartsWith("#")) { return }
+        if ($line -notlike "*=*") { return }
+
+        $parts = $line -split '=', 2
+        $name  = $parts[0].Trim()
+        $value = $parts[1].Trim()
+
+        if ([string]::IsNullOrWhiteSpace($name)) { return }
+
+        if (
+            ($value.StartsWith('"') -and $value.EndsWith('"')) -or
+            ($value.StartsWith("'") -and $value.EndsWith("'"))
+        ) {
+            $value = $value.Substring(1, $value.Length - 2)
+        }
+
+        $env:$name = $value
+    }
+}
+'''
+
 def customize_activation_script(activate_script: str, env_file: str, cli_alias: str, cli_entry_point_script: str):
 
     global PYTHON_CMD
@@ -70,12 +109,16 @@ def customize_activation_script_windows(activate_script: str, env_file: str, cli
     print("")
     if os.path.exists(activate_script):
         with open(activate_script, 'a', encoding='utf-8') as asf:
+            # Write out the Powershell function that can load the .env file
+            asf.write(POWERSHELL_VARIABLE_FILE_LOAD_FUNCTION)
+            asf.write(LNSEP)
+
             # Load environment file if present (assumed to be a PowerShell script)
             asf.write(LNSEP)
             asf.write(f'if (Test-Path "{env_file}"){LNSEP}')
             asf.write("{" + LNSEP)
             # Dot-source the env file so any $env:VAR changes persist in the session
-            asf.write(f'    . "{env_file}"{LNSEP}')
+            asf.write(f'    Load-Variable-File -VariableFile "{env_file}" {LNSEP}')
             asf.write("}" + LNSEP)
             asf.write(LNSEP)
             asf.write(LNSEP)
