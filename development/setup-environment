@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
+"""
+    This script is designed to work within a 'python-package-template' based repository in order to
+    setup and configure the virtual environment to be easy to use withing a VSCode, Kiro, or other
+    similar IDE.
 
+    
+"""
 from typing import Tuple
 
 import configparser
@@ -276,7 +282,6 @@ def setup_environment_main():
             shutil.rmtree(VIRTUAL_ENV_DIR, ignore_errors=False)
         if os.path.exists(INITIALIZED_FILE):
             os.remove(INITIALIZED_FILE)
-
 
     # -------------------------------------------------------------------------------------------
     #                                 Create the Virtual Environment
