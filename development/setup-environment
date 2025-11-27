@@ -58,7 +58,7 @@ def customize_activation_script(activate_script: str, env_file: str, cli_alias: 
 
 def customize_activation_script_windows(activate_script: str, env_file: str, cli_alias: str, cli_entry_point_script: str):
     """
-    Customize the Windows venv activation script (PowerShell: Activate.ps1) used by VSCode.
+        Customize the Windows venv activation script (PowerShell: Activate.ps1) used by VSCode.
     """
 
     global PYTHON_CMD
