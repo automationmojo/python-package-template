@@ -162,7 +162,7 @@ def setup_environment_main():
 
     ACTIVATE_SCRIPT = os.path.join(VIRTUAL_ENV_DIR, "bin", "activate")
     if platform.system() == "Windows":
-        ACTIVATE_SCRIPT = os.path.join(VIRTUAL_ENV_DIR, "bin", "Activate.ps1")
+        ACTIVATE_SCRIPT = os.path.join(VIRTUAL_ENV_DIR, "Scripts", "Activate.ps1")
 
     ENV_FILE = os.path.join(REPOSITORY_DIR, ".env")
     if not os.path.exists(ENV_FILE):
